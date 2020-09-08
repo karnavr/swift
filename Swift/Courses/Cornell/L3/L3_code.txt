@@ -1,0 +1,102 @@
+COPY & PASTE LECTURE CODE 
+
+In order to have enough time to go over all the material in this lecture, we're providing the code for creating the constraints and UI elements. More instructions to follow on where we'll be using this later in the lecture! 
+
+Part 1: ViewController.swift  
+   
+    var pushNavViewControllerButton: UIButton!
+    var presentModalViewControllerButton: UIButton!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+
+        // Set the navigation controller's title!
+
+        pushNavViewControllerButton = UIButton()
+        pushNavViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
+        pushNavViewControllerButton.setTitle("Push Navigation VC", for: .normal)
+        pushNavViewControllerButton.setTitleColor(.blue, for: .normal)
+        pushNavViewControllerButton.addTarget(self, action: #selector(pushNavViewController), for: .touchUpInside)
+        view.addSubview(pushNavViewControllerButton)
+
+        presentModalViewControllerButton = UIButton()
+        presentModalViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
+        presentModalViewControllerButton.setTitle("Present Modal VC [change my name]", for: .normal)
+        presentModalViewControllerButton.setTitleColor(.red, for: .normal)
+        presentModalViewControllerButton.addTarget(self, action: #selector(presentModalViewController), for: .touchUpInside)
+        view.addSubview(presentModalViewControllerButton)
+
+        setupConstraints()
+    }
+
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            pushNavViewControllerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pushNavViewControllerButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            pushNavViewControllerButton.heightAnchor.constraint(equalToConstant: 24)
+            ])
+
+        NSLayoutConstraint.activate([
+            presentModalViewControllerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            presentModalViewControllerButton.topAnchor.constraint(equalTo: pushNavViewControllerButton.bottomAnchor, constant: 16),
+            presentModalViewControllerButton.heightAnchor.constraint(equalToConstant: 24)
+            ])
+    }
+
+    @objc func pushNavViewController() {
+    }
+
+    @objc func presentModalViewController() {
+    }
+
+Part 2: ModalViewController.swift
+
+    var button: UIButton!
+    var textField: UITextField!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .red
+
+        textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.text = titleString
+        textField.borderStyle = .roundedRect
+        textField.backgroundColor = .white
+        textField.textAlignment = .center
+        textField.clearsOnBeginEditing = true
+        view.addSubview(textField)
+
+        button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Dismiss and save text", for: .normal)
+        button.backgroundColor = .white
+        button.setTitleColor(.red, for: .normal)
+
+        // When the button is pressed, dismiss this ModalViewController and change the button name
+        button.addTarget(self, action: #selector(dismissViewControllerAndSaveText), for: .touchUpInside)
+        view.addSubview(button)
+
+        setupConstraints()
+    }
+
+    func setupConstraints() {
+        // textField constraints
+        NSLayoutConstraint.activate([
+            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            textField.heightAnchor.constraint(equalToConstant: 24)
+            ])
+
+        // button constraints
+        NSLayoutConstraint.activate([
+            button.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.heightAnchor.constraint(equalToConstant: 48)
+            ])
+    }
+
+    @objc func dismissViewControllerAndSaveText() {
+    }
