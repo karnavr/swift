@@ -78,14 +78,16 @@ struct ContentView: View {
                 }
                 
             }
-            .navigationBarTitle("Unit Conversion ")
+            .navigationTitle("Unit Conversion ")
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .preferredColorScheme(.light)
+        Group {
+            ContentView()
+                .preferredColorScheme(.light)
+        }
     }
 }
