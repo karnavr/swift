@@ -21,9 +21,30 @@ struct CapsuleText: View {
     }
 }
 
+
+struct Title: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.title)
+            .foregroundColor(.blue)
+    }
+}
+
+extension View {
+    func titleStyle() -> some View {
+        self.modifier(Title())
+    }
+}
+
+
 struct ContentView: View {
     var body: some View {
         VStack(spacing: 10) {
+            
+            Text("Title template")
+                .titleStyle()
+            
+            
             CapsuleText(text: "Button one")
                 .foregroundColor(.white)
             CapsuleText(text: "Button two")
