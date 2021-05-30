@@ -66,8 +66,8 @@ struct ContentView: View {
                             .background(Color.red)
                             .clipShape(Capsule())
                     })
-                        
-                        
+                    
+                    
                 }
                 .padding(40)
                 
@@ -79,8 +79,8 @@ struct ContentView: View {
                       message: Text(alertMessage),
                       dismissButton: .default(Text("Continue")) {
                         self.askQuestion()
-                })
-        }
+                      })
+            }
         }
         
     }
