@@ -11,6 +11,7 @@ struct ContentView: View {
     
     let possibleMoves = ["Rock", "Paper", "Scissors"]
     let symbolNames = ["capsule", "newspaper", "scissors"]
+    let colors: [UIColor] = [.orange, .magenta, .blue, .cyan, .green, .purple, .red]
     
     @State private var shouldWin = true
     @State private var computerMove = 1
@@ -18,13 +19,14 @@ struct ContentView: View {
     @State private var score = 0
     @State private var gamesPlayed = 0
     @State private var gameEnded = false
+    @State private var headerColor: UIColor = .orange
     
     
     var body: some View {
         VStack(spacing: 30) {
             
             ZStack {
-                Color(.orange).edgesIgnoringSafeArea(.top)
+                Color(headerColor).edgesIgnoringSafeArea(.top)
                     .frame(height: 80, alignment: .top)
                 
                 HStack(spacing: 30) {
@@ -95,6 +97,7 @@ struct ContentView: View {
                     resetBoard()
                     gamesPlayed = 0
                     score = 0
+                    headerColor = colors.randomElement()!
                   })
         }
     }
