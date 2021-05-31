@@ -16,6 +16,31 @@ struct ContentView: View {
     @State private var alertMessage = ""
     @State private var showingAlert = false
     
+    var optimalSleepTime: String {
+        var result: String = "10:38 PM"
+        let model = SleepCalculator()
+        
+        let components = Calendar.current.dateComponents([.hour, .minute], from: wakeUp)
+        
+        let hour = (components.hour ?? 0) * 60 * 60
+        let minute = (components.minute ?? 0) * 60
+        
+        do {
+            let prediction = try model.prediction(wake: Double(hour + minute), estimatedSleep: sleepAmount, coffee: Double(coffeeAmount))
+            
+            let sleepTime = wakeUp - prediction.actualSleep //sleepTime as a Date()
+            
+            let formatter = DateFormatter()
+            formatter.timeStyle = .short
+            
+            result = formatter.string(from: sleepTime)
+        } catch {
+            result = "error"
+        }
+        
+        return result
+    }
+    
     var body: some View {
         NavigationView {
             Form {
@@ -52,6 +77,22 @@ struct ContentView: View {
                     }
                 }
                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                
+                Section(header: Text("Optimal Bedtime")) {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "moon.zzz.fill")
+                            .font(.system(size: 25))
+                            .foregroundColor(.purple)
+                        Text(optimalSleepTime)
+                            .font(.largeTitle)
+                            .fontWeight(.medium)
+                            .padding(.vertical)
+                        Spacer()
+                    }
+                        
+                }
+                
             }
             .navigationTitle("BetterRest")
             .navigationBarItems(trailing: Button(action: calculateBedtime) {
@@ -101,5 +142,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            
     }
 }
