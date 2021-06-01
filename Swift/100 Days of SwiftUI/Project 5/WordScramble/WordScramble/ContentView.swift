@@ -17,6 +17,18 @@ struct ContentView: View {
     @State private var errorMessage = ""
     @State private var showingError = false
     
+    var currentScore: Int {
+        // computes the current score as a rolling sum of the total number of letters used to create new words
+        
+        var score = 0
+        
+        for i in (0..<usedWords.count) {
+            score += usedWords[i].count
+        }
+        
+        return score
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -29,6 +41,24 @@ struct ContentView: View {
                     Image(systemName: "\($0.count).circle")
                     Text($0)
                 }
+                .cornerRadius(20)
+                .padding(.vertical)
+                
+                
+                HStack(spacing: 20) {
+                    Text("Score:")
+                        .font(.title2)
+                        .bold()
+                    Text("\(currentScore)")
+                        .fontWeight(.bold)
+                        .font(.largeTitle)
+//                        .frame(width: 40, height: 50, alignment: .center)
+//                        .background(Color.blue)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(10)
+                }
+                
+                    
             }
             .navigationBarTitle(rootWord)
             .onAppear(perform: startGame)
@@ -137,3 +167,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+// next steps: add an "i" button next to the score, that presents a full-screen modal explaing how the score is computed (also come up with a better scoring system other than simply adding the number of letters used in the created words haha)
